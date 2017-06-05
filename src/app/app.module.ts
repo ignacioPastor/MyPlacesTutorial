@@ -6,25 +6,44 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { PlacePage } from '../pages/place/place';
+import { NewPlacePage } from '../pages/new-place/new-place';
+import { PlacesServices } from '../services/places.service';
+import { IonicStorageModule  } from '@ionic/storage';
+import { Geolocation } from '@ionic-native/geolocation';
+import { AgmCoreModule } from 'angular2-google-maps/core';
+import { GoogleMaps } from '@ionic-native/google-maps';
+import { MyData } from '../myData';
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage
+    HomePage,
+    NewPlacePage,
+    PlacePage
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
+    AgmCoreModule.forRoot({
+      apiKey: MyData.GOOGLE_API_KEY
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage
+    HomePage,
+    NewPlacePage,
+    PlacePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    PlacesServices,
+    Geolocation,
+    GoogleMaps
   ]
 })
 export class AppModule {}
